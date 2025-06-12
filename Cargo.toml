@@ -1,0 +1,9 @@
+[workspace]
+resolver = "2"
+members = [
+    "nodes",
+    "interface",
+    "manager",
+    "global_lib",
+    "nodes/src/system/sendable_proc_macros"
+]

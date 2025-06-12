@@ -1,0 +1,8 @@
+target
+
+manager/node*
+manager/log*
+manager/comm*
+logs/*
+
+!logs/.gitkeep

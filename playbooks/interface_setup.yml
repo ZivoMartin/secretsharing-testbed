@@ -1,0 +1,33 @@
+- name: Reset and update secret-sharing protocol
+  hosts: all
+  become: true
+  tasks:
+    - name: Clone the repository
+      git:
+        repo: "https://github.com/ZivoMartin/secretsharing-testbed.git"
+        dest: "bench-secretsharing"
+        clone: yes
+        update: yes
+        force: yes
+        
+    - name: Copy json_config to remote machine
+      copy:
+        src: "../{{ json_config_path }}"
+        dest: "bench-secretsharing/{{ json_config_path }}"
+
+    - name: Copy machines_ips to remote machine
+      copy:
+        src: "../{{ machines_path }}"
+        dest: "bench-secretsharing/{{ machines_path }}"
+
+    - name: Build interface
+      shell: 
+        ~/.cargo/bin/cargo build --release
+      args:
+        chdir: bench-secretsharing/interface
+
+    - name: Start Interface
+      shell:
+        cmd: bench-secretsharing/target/release/interface
+      async: 1000
+      poll: 0

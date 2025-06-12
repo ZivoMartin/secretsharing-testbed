@@ -1,0 +1,26 @@
+[
+    {
+        "output": "output",
+        "result_type": [
+            "average",
+            "median",
+            "details"
+        ]
+    },
+    {
+        "debit": {
+            "duration": 16
+        },
+        "output_file": "lightweight_debit",
+        "setup": {
+            "algos": [
+                "lightweight"
+            ],
+            "n": [
+                30
+            ],
+            "batch_size": 1,
+            "dealer_corruption": 0
+        }
+    }
+]

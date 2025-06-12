@@ -1,0 +1,21 @@
+.   Cargo.toml                    112 Conf[TOML]       /tmp/merkl_test/Cargo.toml
+D   main.rs                      1622 Rust             /tmp/merkl_test/src/main.rs
+  * *Shell Command Output*        169 Fundamental      
+ %  tmp                          1687 Dired by name    /tmp/
+    todo                         1842 Fundamental      ~/Travail/bench-secretsharing/todo
+    bivariate_polynomial.rs      4650 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/data_structures/bivariate_polynomial.rs
+    messages.rs                  2737 Rust             ~/Travail/bench-secretsharing/src/messages.rs
+    fft.rs                       2374 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/crypto_lib/fft.rs
+    evaluation_domain.rs         7820 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/crypto_lib/evaluation_domain.rs
+    big_log                      2419 Fundamental      /tmp/big_log
+    polynomial.rs                7247 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/crypto_lib/crypto_blstrs/polynomial.rs
+    mod.rs                       7880 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/crypto_lib/crypto_blstrs/mod.rs
+    scheme.rs                    9215 Rust             ~/Travail/bench-secretsharing/nodes/src/crypto/scheme.rs
+    configuration.rs             3014 Rust             ~/Travail/bench-secretsharing/nodes/src/node/configuration.rs
+    *scratch*                     145 Lisp Interaction 
+ %* *Messages*                  54491 Messages         
+ %* *lsp-log*                   17191 Fundamental      
+ %* *rust-analyzer::stderr*      7191 Special          
+    *rust-analyzer*                 0 Fundamental      
+  * *Flycheck error messages*     170 Flycheck error messages 
+ %* *compilation*                 305 Compilation:exit [2] [0 0 0] 

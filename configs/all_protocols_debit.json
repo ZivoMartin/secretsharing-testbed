@@ -1,0 +1,31 @@
+[
+    {
+        "output": "output",
+        "result_type": [
+            "average",
+            "median",
+            "details"
+        ]
+    },
+    {
+        "debit": {
+            "duration": 16
+        },
+        "output_file": "debit_all",
+        "setup": {
+            "algos": [
+                "lightweight",
+                "avss_simpl",
+                "bingo",
+                "hbacss",
+                "badger",
+                "haven"
+            ],
+            "n": [
+                30
+            ],
+            "batch_size": 1,
+            "dealer_corruption": 0
+        }
+    }
+]

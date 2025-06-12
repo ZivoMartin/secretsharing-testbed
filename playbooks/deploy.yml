@@ -1,0 +1,29 @@
+- name: Deploy and run secret-sharing protocol
+  hosts: all
+  tasks:
+    - name: Clone the repository
+      git:
+        repo: "https://github.com/ZivoMartin/secretsharing-testbed.git"
+        dest: "bench-secretsharing"
+        clone: yes
+        update: yes
+        force: yes
+
+    - name: Build nodes
+      shell: 
+        ~/.cargo/bin/cargo build --release
+      args:
+        chdir: bench-secretsharing/nodes
+
+    - name: Build manager
+      shell: |
+        ~/.cargo/bin/cargo build --release
+      args:
+        chdir: bench-secretsharing/manager
+        executable: /bin/bash
+
+    - name: Start manager
+      shell:
+        cmd: bench-secretsharing/target/release/manager
+      async: 1000
+      poll: 0

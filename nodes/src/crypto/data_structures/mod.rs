@@ -1,0 +1,12 @@
+use blstrs::G1Projective;
+pub mod bivariate_polynomial;
+pub mod commitment;
+pub mod encryption;
+pub mod keypair;
+pub mod merkle_tree;
+pub mod reed_solomon_code;
+pub mod scalars;
+pub mod share;
+pub type Sign = aptos_crypto::bls12381::Signature;
+pub type Secret = blstrs::Scalar;
+pub type Base = [G1Projective; 2];

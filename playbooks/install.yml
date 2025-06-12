@@ -1,0 +1,53 @@
+- name: Install Rust and dependencies
+  hosts: all
+  become: true
+  tasks:
+    - name: Remove cargo installed via apt
+      apt:
+        name: cargo
+        state: absent
+
+    - name: Install required packages (without cargo)
+      apt:
+        update_cache: yes
+        name:
+          - curl
+          - build-essential
+          - gnuplot
+        state: present
+        force_apt_get: yes
+
+    - name: Ensure rustup is installed
+      become: false
+      shell: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: ~/.cargo/bin/rustup
+
+    - name: Ensure latest stable Rust is installed
+      become: false
+      shell: |
+        ~/.cargo/bin/rustup show
+        ~/.cargo/bin/rustup install stable
+        ~/.cargo/bin/rustup default stable
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+
+    - name: Add Rust to PATH in .profile
+      become: false
+      lineinfile:
+        path: ~/.profile
+        line: 'export PATH="$HOME/.cargo/bin:$PATH"'
+        insertafter: EOF
+
+    - name: Test cargo access
+      shell: |
+        ~/.cargo/bin/cargo --version
+        register: cargo_result
+        
+    - name: Show cargo version
+      debug:
+        var: cargo_result.stdout
+
+
+        

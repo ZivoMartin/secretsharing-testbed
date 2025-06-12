@@ -1,0 +1,26 @@
+[
+    {
+        "output": "output",
+        "result_type": [
+            "average",
+            "median",
+            "details"
+        ]
+    },
+    {
+        "latency": {
+            "hmt": 15
+        },
+        "output_file": "bingo_lat",
+        "setup": {
+            "algos": [
+                "bingo"
+            ],
+            "n": [
+                10, 20, 30, 40, 50, 60, 70, 80, 90, 100
+            ],
+            "batch_size": 1,
+            "dealer_corruption": 0
+        }
+    }
+]

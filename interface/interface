@@ -1,0 +1,10 @@
+  /home/martin/Travail/bench-secretsharing/interface:
+  drwxr-xr-x 3 martin martin  4096 15 sept. 15:01 .
+  drwxr-xr-x 9 martin martin  4096 14 sept. 15:46 ..
+  -rw-r--r-- 1 martin martin 12214  5 juin  14:07 Cargo.lock
+  -rw-r--r-- 1 martin martin   288 14 août  17:21 Cargo.toml
+D -rw-r--r-- 1 martin martin 18621 14 sept. 19:06 debit_derived_sharing.png
+D -rw-r--r-- 1 martin martin 21247 14 sept. 19:06 debit_sharing.png
+  -rw-r--r-- 1 martin martin 16209 15 sept. 15:01 latency_sharing.png
+  -rw------- 1 martin martin     0 13 sept. 15:11 nohup.out
+  drwxr-xr-x 2 martin martin  4096 16 août  16:55 src

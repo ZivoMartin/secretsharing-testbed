@@ -1,0 +1,111 @@
+use global_lib::{
+    dec, extract_ip, get_next_message, init_message,
+    ip_addr::{Ip, IpV4},
+    messages::{ManagerCode, NameSpace, NodeCommand},
+    private_message, select,
+    settings::{INTERFACE_PORT, LOCAL, MANAGER_PORT},
+    Bytes, Wrapped,
+};
+
+use std::{str::FromStr, sync::Arc};
+use tokio::{net::TcpListener, process::Command, sync::Mutex};
+
+#[allow(dead_code)]
+struct Manager {
+    machin_ip: Ip,
+    interface_ip: IpV4,
+    nodes: Vec<u16>,
+    n_to_reach: u16,
+}
+
+impl Manager {
+    fn new(ip: Ip) -> Manager {
+        Manager {
+            machin_ip: ip,
+            nodes: Vec::new(),
+            interface_ip: IpV4::default(),
+            n_to_reach: 0,
+        }
+    }
+}
+
+async fn new_command(manag: Wrapped<Manager>, bytes: Vec<u8>, ip: String) {
+    select!(
+        ManagerCode, bytes, manag,
+        GEN => generate ip,
+        KILL => kill,
+        CONNECT => add_node,
+    );
+}
+
+async fn generate(manag: Wrapped<Manager>, bytes: Bytes<'_>, interface_ip: String) {
+    let n: u16 = dec!(bytes, u16);
+    for _ in 0..n {
+        let ip = interface_ip.clone();
+        let machin_ip = manag.lock().await.machin_ip;
+        tokio::spawn(async move {
+            Command::new("../target/release/nodes")
+                .arg(&ip)
+                .arg(IpV4::ip_to_string(&machin_ip))
+                .status()
+                .await
+                .expect("Failed to create a new node");
+        });
+    }
+    manag.lock().await.n_to_reach = n;
+    manag.lock().await.interface_ip = IpV4::from_str(&interface_ip).unwrap();
+    println!("{} nodes generated.", n);
+}
+
+async fn kill(manag: Wrapped<Manager>, _bytes: Bytes<'_>) {
+    let msg = init_message(NameSpace::Heart, NodeCommand::Kill);
+    let manag = manag.lock().await;
+    println!("{} nodes killed", manag.nodes.len());
+    broadcast(manag.machin_ip, &manag.nodes, &msg).await
+}
+
+async fn broadcast(machin_ip: Ip, ports: &[u16], msg: &[u8]) {
+    for p in ports {
+        let ip = IpV4::new(machin_ip, *p);
+        let msg = msg.to_vec();
+        tokio::spawn(async move { private_message(&ip, msg, 0) });
+    }
+}
+
+async fn add_node(manag: Wrapped<Manager>, bytes: Bytes<'_>) {
+    let mut manag = manag.lock().await;
+    let port: u16 = dec!(bytes, u16);
+    manag.nodes.push(port);
+}
+
+#[tokio::main]
+async fn main() {
+    let ip: Ip = if LOCAL {
+        IpV4::LOCAL_IP
+    } else {
+        IpV4::ip_from_str(
+            &public_ip::addr()
+                .await
+                .expect("Failed to fetch public ip")
+                .to_string(),
+        )
+    };
+    let listener = TcpListener::bind(IpV4::new(ip, MANAGER_PORT).to_string())
+        .await
+        .expect("Failed to bind");
+    let manag = Arc::new(Mutex::new(Manager::new(ip)));
+    loop {
+        let (mut socket, ip) = listener.accept().await.unwrap();
+        let manag = manag.clone();
+        tokio::spawn(async move {
+            loop {
+                let (message_buf, _) = match get_next_message(&mut socket).await {
+                    Some(b) => b,
+                    _ => return,
+                };
+                let ip = format!("{}:{INTERFACE_PORT}", extract_ip(&ip.to_string()));
+                new_command(manag.clone(), message_buf, ip).await;
+            }
+        });
+    }
+}
