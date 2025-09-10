@@ -6,7 +6,7 @@ Each configuration file is a JSON array of experiment blocks. The format is desi
 
 ---
 
-## 📁 Global Block
+## Global Block
 
 The first object in the array is a **global configuration block**, specifying how results are handled:
 
@@ -25,7 +25,7 @@ The first object in the array is a **global configuration block**, specifying ho
 
 ---
 
-## 🧪 Experiment Blocks
+## Experiment Blocks
 
 Each subsequent object in the array is an **experiment definition**. Two types are supported:
 
@@ -56,7 +56,7 @@ Measures how long it takes to complete secret sharing operations.
   - `batch_size`: size of the batch.
   - `dealer_corruption`: 0 (honest) or 1 (malicious dealer).
 
-### 🔹 Debit Test
+### Debit Test
 
 Measures throughput over a fixed time window.
 
@@ -80,14 +80,14 @@ Measures throughput over a fixed time window.
 
 ---
 
-## 🔄 Automatic Combinations
+## Automatic Combinations
 
 Each experiment block will automatically test **all combinations** of the setup parameters:
 - For example, with 2 algorithms and 2 network sizes, 4 configurations will be tested.
 
 ---
 
-## 💡 Notes
+## Notes
 
 - You may vary `n`, `batch_size`, or even `dealer_corruption` to evaluate influence of different parameters.
 - All experiments share the global `result_type` setting from the first block.
