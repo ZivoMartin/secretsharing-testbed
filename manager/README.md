@@ -6,7 +6,7 @@ It listens for TCP connections from the central `interface`, accepts incoming in
 
 ---
 
-## 🧭 Responsibilities
+## Responsibilities
 
 - Waits for instructions from the `interface`
 - Can launch or terminate `node` processes
@@ -16,7 +16,7 @@ It listens for TCP connections from the central `interface`, accepts incoming in
 
 ---
 
-## ⚙️ Behavior Summary
+## Behavior Summary
 
 1. **Startup**: Binds to a local IP (based on `MANAGER_IPS`) and starts listening for commands from the interface.
 2. **Command Handling**:
@@ -30,13 +30,13 @@ It listens for TCP connections from the central `interface`, accepts incoming in
 
 ---
 
-## ⚡ CPU Usage Logger
+## CPU Usage Logger
 
 A background task is initialized to periodically poll CPU usage using the `sysinfo` crate.
 
 ---
 
-## 🧱 File Structure
+## File Structure
 
 ```
 manager/
@@ -50,7 +50,7 @@ manager/
 
 ---
 
-## ▶️ Running a manager
+## Running a manager
 
 Managers are typically launched automatically by the top-level script (`run_experiment.py`), which connects via SSH and starts them on each machine.
 
@@ -64,7 +64,7 @@ Each manager must be running and accessible over TCP when the `interface` initia
 
 ------
 
-## 💡 Notes
+## Notes
 
 - Make sure `../target/release/nodes` is built before launching the interface.
 - The interface assumes all managers are already running.
