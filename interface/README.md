@@ -10,7 +10,7 @@ This is the **main orchestrator** of the distributed secret sharing protocol tes
 
 ---
 
-## ⚙️ Usage
+## Usage
 
 This component is not meant to be launched directly. Instead, it is executed by the top-level script `run_experiment.py`.
 
@@ -22,7 +22,7 @@ cargo run --release -- <path_to_config.json> <path_to_machine_list>
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 interface/
@@ -39,13 +39,13 @@ interface/
 
 ---
 
-## 📞 Communication Protocol
+## Communication Protocol
 
 The interface communicates with each manager using a lightweight custom protocol over TCP. Messages are serialized using `serde`. The shared types are defined in the root shared library.
 
 ---
 
-## ✏️ Notes
+## Notes
 
 - Interface assumes managers are already running on the machines listed in the IP file.
 - TCP errors and node failures are logged and handled gracefully whenever possible.
